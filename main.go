@@ -32,8 +32,6 @@ var (
 	gcsBucketName string
 	httpClient    *http.Client
 
-	vaultSecretShares      int
-	vaultSecretThreshold   int
 	vaultStoredShares      int
 	vaultRecoveryShares    int
 	vaultRecoveryThreshold int
@@ -48,9 +46,7 @@ var (
 
 // InitRequest holds a Vault init request.
 type InitRequest struct {
-	SecretShares      int `json:"secret_shares"`
-	SecretThreshold   int `json:"secret_threshold"`
-	StoredShares      int `json:"stored_shares"`
+	StoredShares			int `json:"stored_shares"`
 	RecoveryShares    int `json:"recovery_shares"`
 	RecoveryThreshold int `json:"recovery_threshold"`
 }
@@ -86,8 +82,6 @@ func main() {
 		vaultAddr = "https://127.0.0.1:8200"
 	}
 
-	vaultSecretShares = intFromEnv("VAULT_SECRET_SHARES", 5)
-	vaultSecretThreshold = intFromEnv("VAULT_SECRET_THRESHOLD", 3)
 
 	vaultInsecureSkipVerify := boolFromEnv("VAULT_SKIP_VERIFY", false)
 
@@ -218,8 +212,6 @@ func main() {
 
 func initialize() {
 	initRequest := InitRequest{
-		SecretShares:      vaultSecretShares,
-		SecretThreshold:   vaultSecretThreshold,
 		StoredShares:      vaultStoredShares,
 		RecoveryShares:    vaultRecoveryShares,
 		RecoveryThreshold: vaultRecoveryThreshold,
